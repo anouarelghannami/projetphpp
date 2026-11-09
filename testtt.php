@@ -46,9 +46,7 @@ function validerMotDePasse($password) {
     <h2>Formulaire de test XSS</h2>
     <form method="POST" action="">
         <input type="text" name="message" placeholder="Entrez un message...">
-        <button type="submit">Envoyer</button>
+        <button></button>
     </form>
 </body>
 </html>
-
-
