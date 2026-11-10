@@ -1,0 +1,25 @@
+name: local  Sonar Analysis
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sonarqube:
+    name: SonarQube Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Récupération du code source complet (fetch-depth: 0 est nécessaire pour SonarQube)
+      - name: Checking out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 2. Exécution du scan SonarQube
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_HOST_URL:  https://disrupt-essence-daisy.ngrok-free.dev
