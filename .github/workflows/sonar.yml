@@ -4,28 +4,19 @@ on:
   push:
     branches:
       - main
-      - master
-  pull_request:
-    types: [opened, synchronize, reopened]
 
 jobs:
-  sonarqube:
+  build:
     name: SonarQube Scan
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Trigger SonarQube Scanner
-        uses: SonarSource/sonarqube-scan-action@v3.0.0
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v2
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        with:
-          args: >
-            -Dsonar.projectKey=MyFirstPHPProject
-            -Dsonar.sources=.
-
-      # ...
