@@ -134,4 +134,5 @@ $comments = $db->query("SELECT * FROM comments")->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
 </body>
-</html>
+</html>        
+
