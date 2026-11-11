@@ -3,4 +3,5 @@ table.foreach((elem)=>{
     console.log('anouar')
 })
 
-let x =1
+let x =1  
+console.log('ss')
