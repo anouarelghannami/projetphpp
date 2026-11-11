@@ -21,7 +21,5 @@ jobs:
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v2
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_HOST_URL:  https://disrupt-essence-daisy.ngrok-free.dev
-
-# mmS
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
