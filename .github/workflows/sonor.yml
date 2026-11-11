@@ -1,4 +1,4 @@
-name: local  Sonar Analysis
+name: local Sonar Analysis
 
 on:
   push:
@@ -11,16 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Récupération du code source complet (fetch-depth: 0 est nécessaire pour SonarQube)
       - name: Checking out code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
- 
-      # 2. Exécution du scan SonarQube
-   - name: SonarQube Scan
-      uses: SonarSource/sonarqube-scan-action@v2
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        SONAR_SCANNER_OPTS: "-Dsonar.scanner.httpHeaders=ngrok-skip-browser-warning=true"
+
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_SCANNER_OPTS: "-Dsonar.scanner.httpHeaders=ngrok-skip-browser-warning=true"
