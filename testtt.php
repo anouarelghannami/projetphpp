@@ -47,6 +47,6 @@ function validerMotDePasse($password) {
     <form method="POST" action="">
         <input type="text" name="message" placeholder="Entrez un message...">
         <button></button>
-    </form>
+    </form>  
 </body>
 </html>
