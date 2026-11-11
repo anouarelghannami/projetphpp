@@ -21,4 +21,4 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_SCANNER_OPTS: "-Dsonar.scanner.httpHeaders=ngrok-skip-browser-warning=true"
+          SONAR_SCANNER_OPTS: "-Dhttp.agent=Mozilla/5.0"
