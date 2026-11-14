@@ -254,6 +254,5 @@ $comments = $db->query(
         <?php endforeach; ?>
 
     </div>
-
 </body>
 </html>
