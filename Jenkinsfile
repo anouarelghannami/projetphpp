@@ -3,7 +3,18 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                echo 'Jenkinsfile détecté avec succès !'
+                echo 'Jenkinsfile detecte avec succes !'
+            }
+        }
+
+        stage('SonarCloud Analysis') {
+            steps {
+                withSonarQubeEnv('SonarCloud') {
+                    script {
+                        def scannerHome = tool 'SonarScanner'
+                        bat "\"${scannerHome}\\bin\\sonar-scanner.bat\" -Dsonar.organization=anouarelghannami -Dsonar.projectKey=anouarelghannami_projetphpp -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io"
+                    }
+                }
             }
         }
     }
