@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Ajouter un produit</title>
+</head>
+<body>
+    <section>
+        <div class="container mt-4">
+            <div class="d-flex flex-column justify-content-center">
+                <h1 class="title">Ajouter un produit :</h1>
+
+                <div id="alertMessage" class="alert d-none mt-3" role="alert"></div>
+
+                <form id="formAjouterProduit">
+                    <div class="row mt-4 mb-2">
+                        <div class="col-md-6"><label for="des">Désignation</label></div>
+                        <div class="col-md-6"><input type="text" class="form-control" name="designation" id="des" required></div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-6"><label for="Cat">Catégorie</label></div>
+                        <div class="col-md-6">
+                            <select name="categorie" id="Cat" class="form-control" required>
+                                <option value="Nettoyage">Nettoyage</option>
+                                <option value="Cosmétique">Cosmétique</option>
+                                <option value="Electrique">Eléctrique</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-6"><label for="prix">Prix</label></div>
+                        <div class="col-md-6"><input type="number" step="0.01" class="form-control" name="prix" id="prix" required></div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-6"><label for="quant">Quantité</label></div>
+                        <div class="col-md-6"><input type="number" class="form-control" name="quantite" id="quant" required></div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-6"><label for="date">Date de création</label></div>
+                        <div class="col-md-6"><input type="date" class="form-control" name="dateCreation" id="date" required></div>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-4 gap-4">
+                        <input type="submit" class="btn btn-primary w-50" value="Ajouter un produit">
+                        <input type="reset" class="btn btn-danger w-50" value="Réinitialiser">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    document.getElementById("formAjouterProduit").addEventListener("submit", function(e) {
+        e.preventDefault(); // Empêche le rechargement classique de la page
+
+        const alertBox = document.getElementById("alertMessage");
+
+        // Préparation de l'objet JSON
+        const produitData = {
+            designation: document.getElementById("des").value,
+            categorie: document.getElementById("Cat").value,
+            prix: document.getElementById("prix").value,
+            quantite: document.getElementById("quant").value,
+            dateCreation: document.getElementById("date").value
+        };
+
+        // Envoi de la requête POST JSON vers api.php
+
+        fetch("controleapi.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(produitData)
+        })
+        .then(response => {
+            return response.json().then(data => ({ status: response.status, body: data }));
+        })
+        .then(result => {
+            if (result.status === 200 || result.status === 201) {
+                alertBox.className = "alert alert-success";
+                alertBox.innerText = result.body.message || "Produit ajouté avec succès !";
+                alertBox.classList.remove("d-none");
+
+                // Redirection vers la liste des produits après 1.5 seconde
+
+                setTimeout(() => {
+                    window.location.href = "listeProduits.php";
+                }, 1500);
+            } else {
+                alertBox.className = "alert alert-danger";
+                alertBox.innerText = result.body.error || "Une erreur est survenue.";
+                alertBox.classList.remove("d-none");
+            }
+        })
+        .catch(error => {
+            console.error("Erreur Fetch:", error);
+            alertBox.className = "alert alert-danger";
+            alertBox.innerText = "Impossible de contacter le serveur.";
+            alertBox.classList.remove("d-none");
+        });
+        
+    });
+    </script>
+</body>
+</html>
